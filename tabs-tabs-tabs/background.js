@@ -1,5 +1,6 @@
+
 function updateCount(tabId, isOnRemoved) {
-  browser.tabs.query({})
+  chrome.tabs.query({})
   .then((tabs) => {
     let length = tabs.length;
 
@@ -9,20 +10,20 @@ function updateCount(tabId, isOnRemoved) {
       length--;
     }
 
-    browser.browserAction.setBadgeText({text: length.toString()});
+    chrome.browserAction.setBadgeText({text: length.toString()});
     if (length > 2) {
-      browser.browserAction.setBadgeBackgroundColor({'color': 'green'});
+      chrome.browserAction.setBadgeBackgroundColor({'color': 'green'});
     } else {
-      browser.browserAction.setBadgeBackgroundColor({'color': 'red'});
+      chrome.browserAction.setBadgeBackgroundColor({'color': 'red'});
     }
   });
 }
 
 
-browser.tabs.onRemoved.addListener(
+chrome.tabs.onRemoved.addListener(
   (tabId) => { updateCount(tabId, true);
 });
-browser.tabs.onCreated.addListener(
+chrome.tabs.onCreated.addListener(
   (tabId) => { updateCount(tabId, false);
 });
 updateCount();
